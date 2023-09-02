@@ -13,11 +13,17 @@ export default {
             Auth.login(data).then(response => {
                 commit('setUser', response.data)
             })
+        },
+        logout({ commit }) {
+            commit('logout')
         }
     },
     mutations: {
         setUser(state, user) {
             state.user = user
+        },
+        logout(state) {
+            state.user = null
         }
     }
 }

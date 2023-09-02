@@ -1,25 +1,28 @@
 <template>
-  <div class="container w-75">
-    <div class="d-flex justify-content-center align-items-center min-vh-100">
-      <Card class="mt-5">
-        <template #title> Espace personnel </template>
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center min-vh-100 mt-lg-5">
+      <Card class="p-4" style="width: 30em;">
+        <template #title>Espace personnel</template>
         <template #content>
-          <div class="card login-card">
-            <InputText v-model="username" placeholder="Username"></InputText>
-            <br>
-            <Password v-model="password" placeholder="Password"></Password>
-            <br>
+          <div class="p-fluid">
+            <div class="p-field mt5" style="margin-top: 1rem;">
+              <label for="username">Email</label>
+              <InputText id="username" v-model="username" placeholder="Username" />
+            </div>
+            <div class="p-field" style="margin-top: 1rem;">
+              <label for="password">Mot de passe</label>
+              <Password id="password" v-model="password" placeholder="Password" />
+            </div>
           </div>
         </template>
         <template #footer>
           <Button @click="login" icon="pi pi-check" label="Connexion" />
-          <router-link to="/inscription">
-            <Button icon="pi pi-times" label="Insciption" severity="secondary" style="margin-left: 0.5em" />
+          <router-link :to="{ name: 'Register'}">
+            <Button icon="pi pi-times" label="Inscription" class="p-button-secondary" style="margin-left: 0.5em" />
           </router-link>
         </template>
       </Card>
     </div>
-
   </div>
 
 </template>
@@ -31,6 +34,7 @@ import Password from 'primevue/password';
 import Card from 'primevue/card';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import router from '../../router/router.js';
 
 const store = useStore();
 
@@ -38,18 +42,14 @@ const username = ref('');
 const password = ref('');
 
 const login = () => {
-  store.dispatch('user/login', { username: username.value, password: password.value });
+  store.dispatch('user/login', { username: username.value, password: password.value }).then(() => {
+    router.push('/');
+  });
 }
 
 </script>
 
 <style scoped>
 
-.centered-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* Assure que le formulaire est centré verticalement */
-}
 
 </style>
