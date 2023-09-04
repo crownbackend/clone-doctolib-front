@@ -10,9 +10,16 @@ export default {
     },
     actions: {
         login({ commit }, data) {
-            Auth.login(data).then(response => {
-                commit('setUser', response.data)
-            })
+            return new Promise((resolve, reject) => {
+                Auth.login(data)
+                    .then(response => {
+                        commit('setUser', response.data)
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        reject(error)
+                    })
+            });
         },
         logout({ commit }) {
             commit('logout')

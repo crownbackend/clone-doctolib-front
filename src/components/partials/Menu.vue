@@ -17,7 +17,7 @@
           <router-link :to="{name: 'Login'}">
             <Button label="Connexion" icon="pi pi-user" class="mr-2" />
           </router-link>
-          <router-link :to="{name: 'Register'}">
+          <router-link :to="{name: 'ChoicesRegister'}">
             <Button label="Inscription" icon="pi pi-times" class="mr-2" severity="secondary" />
           </router-link>
         </div>
