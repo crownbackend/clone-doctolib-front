@@ -18,7 +18,7 @@
                 </div>
                 <div class="p-field mt5" style="margin-top: 2rem;">
                  <span class="p-float-label">
-                    <Calendar v-model="form.birthDate" dateFormat="dd/mm/yy" inputId="birth_date" />
+                    <Calendar v-model="form.dateOfBirth" dateFormat="dd/mm/yy" inputId="birth_date" />
                     <label for="birth_date">Date de naissance</label>
                  </span>
                 </div>
@@ -44,6 +44,7 @@ import Calendar from "primevue/calendar";
 import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 import { ref } from "vue";
+import UserApi from "../../services/UserApi.js";
 
 const toast = useToast();
 
@@ -51,22 +52,28 @@ const form = ref({
   email: "",
   firstName: "",
   lastName: "",
-  birthDate: "",
+  dateOfBirth: null,
   password: "",
 });
 
 const register = () => {
-  console.log(form.value);
-  if(isEmpty(form.value)) {
-    success()
+  if(checkFormIsValid(form.value)) {
+    UserApi.register(form.value).then((response) => {
+      console.log(response)
+      success()
+    }).catch((e) => {
+      console.log(e)
+      error()
+    })
   } else {
     error()
   }
 }
 
-const isEmpty = (obj) => {
-  return Object.keys(obj).length === 0;
-};
+const checkFormIsValid = (form) => {
+  return form.email !== "" && form.firstName !== "" && form.lastName !== "" && form.dateOfBirth !== null && form.password !== "";
+}
+
 const success = () => {
   return toast.add({
     severity: "success",

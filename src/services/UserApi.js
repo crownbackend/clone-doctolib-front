@@ -1,8 +1,8 @@
 import api from "./api.js";
 
-class User {
+class UserApi {
     baseUrl(){
-        return '/user/'
+        return '/users/'
     }
     register(data) {
         const url = this.baseUrl() + 'register'
@@ -10,4 +10,4 @@ class User {
     }
 }
 
-export default new User()
+export default new UserApi();
