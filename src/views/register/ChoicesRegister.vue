@@ -25,7 +25,7 @@
         </RouterLink>
       </div>
       <div class="col-md-6 cursor">
-        <RouterLink :to="{name: 'Register', params: {name: 'patient'}}">
+        <RouterLink :to="{name: 'Register', params: {name: 'doctor'}}">
           <div class="card flex align-items-center justify-content-center mt-5">
             <Card>
               <template #header>
@@ -63,4 +63,8 @@ console.log('Register')
 .cursor {
   cursor: pointer;
 }
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
 </style>

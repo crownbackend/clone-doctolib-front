@@ -1,30 +1,88 @@
 <template>
   <div class="container">
+    <Toast />
     <div class="d-flex justify-content-center align-items-center min-vh-100 mt-lg-5">
       <Card class="p-4" style="width: 30em;">
-        <template #title>Créer mon compte</template>
-        <template #content>
-          <div class="p-fluid">
-            <div class="p-field mt5" style="margin-top: 1rem;">
-              <label for="username">Email</label>
-              <InputText id="username" placeholder="Email" />
-            </div>
-            <div class="p-field" style="margin-top: 1rem;">
-              <label for="password">Mot de passe</label>
-              <Password id="password" placeholder="Mot de passe" />
-            </div>
-          </div>
-        </template>
-        <template #footer>
-          <Button icon="pi pi-times" label="Inscription" class="p-button-secondary" style="margin-left: 0.5em" />
-        </template>
+          <template #title>Créer mon compte</template>
+          <template #content>
+            <form>
+            <div class="p-fluid">
+                <div class="p-field mt5" style="margin-top: 1rem;">
+                  <InputText id="email" v-model="form.email" placeholder="Email" />
+                </div>
+                <div class="p-field mt5" style="margin-top: 1rem;">
+                  <InputText id="firstName" v-model="form.firstName" placeholder="Nom" />
+                </div>
+                <div class="p-field mt5" style="margin-top: 1rem;">
+                  <InputText id="lastName" v-model="form.lastName" placeholder="Prénom" />
+                </div>
+                <div class="p-field mt5" style="margin-top: 2rem;">
+                 <span class="p-float-label">
+                    <Calendar v-model="form.birthDate" dateFormat="dd/mm/yy" inputId="birth_date" />
+                    <label for="birth_date">Date de naissance</label>
+                 </span>
+                </div>
+                <div class="p-field" style="margin-top: 1rem;">
+                  <Password id="password" v-model="form.password" placeholder="Mot de passe" />
+                </div>
+              </div>
+            </form>
+          </template>
+          <template #footer>
+            <Button icon="pi pi-times" @click="register" type="submit" label="Inscription" class="p-button-secondary" style="margin-left: 0.5em" />
+          </template>
       </Card>
     </div>
   </div>
 </template>
-  <script setup lang="ts">
-  import Card from "primevue/card";
-  import InputText from "primevue/inputtext";
-  import Button from "primevue/button";
-  import Password from "primevue/password";
+<script setup lang="ts">
+import Card from "primevue/card";
+import InputText from "primevue/inputtext";
+import Button from "primevue/button";
+import Password from "primevue/password";
+import Calendar from "primevue/calendar";
+import Toast from "primevue/toast";
+import { useToast } from "primevue/usetoast";
+import { ref } from "vue";
+
+const toast = useToast();
+
+const form = ref({
+  email: "",
+  firstName: "",
+  lastName: "",
+  birthDate: "",
+  password: "",
+});
+
+const register = () => {
+  console.log(form.value);
+  if(isEmpty(form.value)) {
+    success()
+  } else {
+    error()
+  }
+}
+
+const isEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
+};
+const success = () => {
+  return toast.add({
+    severity: "success",
+    summary: "Succès",
+    detail: "Inscription réussi !",
+    life: 3000,
+  });
+};
+const error = () => {
+  return toast.add({
+    severity: "error",
+    summary: "Erreur",
+    detail: "Une erreur est survenue, données invalides",
+    life: 3000,
+  });
+};
+
+
   </script>
