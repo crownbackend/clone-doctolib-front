@@ -2,7 +2,7 @@
   <div class="container">
     <Toast />
     <div class="d-flex justify-content-center align-items-center min-vh-100 mt-lg-5">
-      <Card class="p-4" style="width: 30em;">
+      <Card class="p-4" style="width: 50em;">
         <template #title>Créer mon compte</template>
         <template #content>
           <form>
@@ -63,15 +63,28 @@
                 <div class="p-field">
                   <Textarea id="clinic_ratesAndReimbursement" v-model="form.clinic.ratesAndReimbursement" placeholder="Tarifs et remboursements" rows="5" cols="30" />
                 </div>
-                <div class="p-field">
-
+                <Divider />
+                <div class="p-field" style="margin-top: 1rem;">
+                  <h2>Créer mes consultation</h2>
                 </div>
+                <div class="p-field" v-for="(field, index) in form.clinic.prices" :key="index">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <InputText v-model="field.name" placeholder="Nom consultation" />
+                    </div>
+                    <div class="col-md-6">
+                      <InputNumber v-model="field.price" placeholder="Prix" />
+                    </div>
+                  </div>
+                </div>
+                <Button @click="addFormField" label="Ajouter une consultation" class="p-button-success mt-4" />
               </div>
             </div>
           </form>
         </template>
         <template #footer>
-          <Button icon="pi pi-times" @click="register" type="submit" label="Inscription" class="p-button-secondary" style="margin-left: 0.5em" />
+          <Divider />
+          <Button icon="pi pi-times" @click="register" type="submit" label="Inscription" class="p-button-secondary" style="width: 100%" />
         </template>
       </Card>
     </div>
@@ -109,13 +122,17 @@ const form = ref({
     presentation: "",
     meansOfPayment: "",
     ratesAndReimbursement: "",
-    prices: [],
+    prices: [{
+      name: "",
+      price: 0,
+    }],
   }
 });
 
 const register = () => {
   if(checkFormIsValid(form.value)) {
-    UserApi.register(form.value).then((response) => {
+    console.log(form.value)
+    UserApi.registerDoctor(form.value).then((response) => {
       console.log(response)
       success()
     }).catch((e) => {
@@ -127,12 +144,19 @@ const register = () => {
   }
 }
 
+const addFormField = () => {
+  form.value.clinic.prices.push({
+    name: "",
+    price: 0,
+  })
+}
+
 const checkFormIsValid = (form) => {
   return form.email !== "" && form.firstName !== "" && form.lastName !== ""
       && form.dateOfBirth !== null && form.password !== "" && form.clinic.name !== "" && form.clinic.address !== ""
       && form.clinic.city !== "" && form.clinic.postalCode !== "" && form.clinic.phoneNumber !== ""
       && form.clinic.information !== "" && form.clinic.presentation !== "" && form.clinic.meansOfPayment !== ""
-      && form.clinic.ratesAndReimbursement !== "";
+      && form.clinic.ratesAndReimbursement !== "" && form.clinic.prices.length > 0;
 }
 
 const success = () => {

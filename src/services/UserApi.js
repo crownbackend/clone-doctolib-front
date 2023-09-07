@@ -8,6 +8,11 @@ class UserApi {
         const url = this.baseUrl() + 'register'
         return api.post(url, data)
     }
+
+    registerDoctor(data) {
+        const url = this.baseUrl() + 'register-doctor'
+        return api.post(url, data)
+    }
 }
 
 export default new UserApi();
