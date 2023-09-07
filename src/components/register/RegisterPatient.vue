@@ -22,7 +22,7 @@
                     <label for="birth_date">Date de naissance</label>
                  </span>
                 </div>
-                <div class="p-field" style="margin-top: 1rem;">
+                <div class="p-field mt-5" style="margin-top: 1rem;">
                   <Password id="password" v-model="form.password" placeholder="Mot de passe" />
                 </div>
               </div>
@@ -63,10 +63,10 @@ const register = () => {
       success()
     }).catch((e) => {
       console.log(e)
-      error()
+      error("Une erreur est survenue")
     })
   } else {
-    error()
+    error("Veuillez remplir tous les champs")
   }
 }
 
@@ -82,11 +82,11 @@ const success = () => {
     life: 3000,
   });
 };
-const error = () => {
+const error = (message) => {
   return toast.add({
     severity: "error",
     summary: "Erreur",
-    detail: "Une erreur est survenue, données invalides",
+    detail: message || "Une erreur est survenue",
     life: 3000,
   });
 };
