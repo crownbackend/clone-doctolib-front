@@ -49,7 +49,7 @@
                   </div>
                 </div>
                 <div class="p-field">
-                  <InputNumber id="clinic_phoneNumber" v-model="form.clinic.phoneNumber" inputId="integeronly" placeholder="Téléphone" />
+                  <InputText id="clinic_phoneNumber" v-model="form.clinic.phoneNumber" inputId="integeronly" placeholder="Téléphone" />
                 </div>
                 <div class="p-field">
                   <Textarea id="clinic_information" v-model="form.clinic.information" placeholder="Informations sur votre cabinet" rows="5" cols="30" />
